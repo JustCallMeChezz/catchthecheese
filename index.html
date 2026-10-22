@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta name="theme-color" content="#52bddd"/>
+    <title>catch the cheese!</title>
+    <meta name="description" content="catch the falling cheese with lily and dont let 5 of them drop..."/>
+    <meta name="author" content="sleepychezz"/>
+    <meta name="robots" content="index, follow, max-image-preview:large"/>
+    <link rel="canonical" href="https://justcallmechezz.github.io/projects/catchthecheese/"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="catch the cheese"/>
+    <meta property="og:title" content="catch the cheese!"/>
+    <meta property="og:description" content="catch the falling cheese with lily and dont let 5 of them drop..."/>
+    <meta property="og:url" content="https://justcallmechezz.github.io/projects/catchthecheese/"/>
+    <meta property="og:image" content="https://justcallmechezz.github.io/projects/catchthecheese/images/og-image.jpg"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta property="og:image:alt" content="lily at a park with some... falling cheese"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="catch the cheese!"/>
+    <meta name="twitter:description" content="catch the falling cheese with lily and dont let 5 of them drop..."/>
+    <meta name="twitter:image" content="https://justcallmechezz.github.io/projects/catchthecheese/images/og-image.jpg"/>
+    <meta name="twitter:image:alt" content="lily at a park with some... falling cheese"/>
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg"/>
+    <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png"/>
+    <link rel="shortcut icon" href="icons/favicon.ico"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png"/>
+    <link rel="manifest" href="manifest.webmanifest"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-title" content="catch the cheese"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chewy&family=Gaegu:wght@400;700&display=swap"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"/>
+    <style>
+      :root{--cream:#fbf3e8;--milk:#fffaf2;--oat:#e6cdb0;--caramel:#b9784a;--cocoa:#58392b;--mocha:#80594a;--butter:#faebc9;--d:Chewy,Gaegu,system-ui,sans-serif}
+      *{box-sizing:border-box}
+      html,body{height:100%;margin:0;overflow:hidden;-webkit-tap-highlight-color:transparent}
+      body{font:1.2rem Gaegu,"Patrick Hand",system-ui,sans-serif;color:var(--cocoa);background:linear-gradient(90deg,rgba(214,168,124,.2) 50%,transparent 50%) 0 0/44px 44px,linear-gradient(rgba(214,168,124,.2) 50%,transparent 50%) 0 0/44px 44px var(--cream)}
+      #bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1}
+      canvas{display:block;width:100%;height:100%}
+      #startMenu{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center}
+      #startMenu h1{margin:80px 10px 0;font:400 clamp(2.6rem,12vw,3.4rem)/1.1 var(--d);color:#fff;text-shadow:3px 3px 0 var(--cocoa)}
+      #startMenu img{max-width:80%;height:auto;margin-top:-10px}
+      #startButton{margin-bottom:100px}
+      button{padding:.4rem 1.6rem;font:1.35rem var(--d);color:var(--cocoa);background:var(--butter);border:2px solid var(--cocoa);border-radius:999px;box-shadow:0 5px 0 var(--cocoa);cursor:pointer;transition:transform .15s,box-shadow .15s,background-color .2s}
+      button:hover{background:#fbe4a0;transform:translateY(-2px);box-shadow:0 7px 0 var(--cocoa)}
+      button:active{transform:translateY(4px);box-shadow:0 1px 0 var(--cocoa)}
+      .cute-bouncyy{animation:bounce .4s ease-in-out}
+      @keyframes bounce{30%{scale:.95}50%{scale:1.1}70%{scale:.98}}
+      #scoreboard,#digitalClock{position:absolute;top:10px;z-index:2;padding:0 .8rem;font-size:1.1rem;background:rgba(255,250,242,.88);border:2px solid var(--oat);border-radius:999px;box-shadow:0 3px 0 var(--oat)}
+      #scoreboard{right:10px}
+      #digitalClock{left:10px}
+      #scoreboard i{color:var(--caramel)}
+      #scoreboard i:not(:first-child){margin-left:.6rem}
+      #gameOverPopup{position:fixed;top:50%;left:50%;translate:-50% -50%;z-index:10;display:none;width:min(86vw,360px);padding:1.3rem 1.5rem;text-align:center;background:var(--milk);border:2px solid var(--oat);border-radius:30px;box-shadow:0 6px 0 var(--oat)}
+      #gameOverPopup h2{margin:0 0 .4rem;font:400 2.2rem/1.1 var(--d);text-shadow:2px 2px 0 var(--butter)}
+      #gameOverPopup p{margin:0 0 1.2rem;color:var(--mocha)}
+      #landscapeMessage{display:none}
+      @media(orientation:landscape),(min-width:768px){
+        body{display:flex;justify-content:center;align-items:center;padding:1rem;font-size:1.4rem;text-align:center}
+        #landscapeMessage{display:block;max-width:34ch;padding:1.2rem 1.6rem;background:var(--milk);border:2px solid var(--oat);border-radius:30px;box-shadow:0 6px 0 var(--oat)}
+        #bg,canvas,#startMenu,#gameOverPopup,#scoreboard,#digitalClock{display:none!important}
+      }
+      @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+    </style>
+  </head>
+  <body>
+    <svg id="bg" viewBox="0.02 0.13 106.5 74.1" preserveAspectRatio="xMidYMid slice" shape-rendering="crispEdges"><path fill="#52bddd" d="M0 0h107v1h-107zM0 1h107v1h-107zM0 2h107v1h-107zM0 3h107v1h-107zM0 4h107v1h-107zM0 5h107v1h-107zM0 6h107v1h-107zM0 7h107v1h-107zM0 8h107v1h-107zM0 9h107v1h-107zM0 10h107v1h-107zM0 11h107v1h-107zM0 12h107v1h-107zM0 13h107v1h-107zM0 14h107v1h-107zM0 15h107v1h-107zM0 16h107v1h-107zM0 17h107v1h-107zM0 18h107v1h-107zM0 19h107v1h-107zM0 20h107v1h-107zM0 21h107v1h-107zM0 22h107v1h-107zM0 23h107v1h-107zM0 24h107v1h-107zM0 25h107v1h-107zM0 26h107v1h-107zM0 27h52v1h-52zM55 27h52v1h-52zM0 28h51v1h-51zM58 28h38v1h-38zM99 28h8v1h-8zM0 29h49v1h-49zM59 29h36v1h-36zM100 29h1v1h-1zM105 29h2v1h-2zM0 30h48v1h-48zM60 30h31v1h-31zM106 30h1v1h-1zM0 31h47v1h-47zM60 31h30v1h-30zM0 32h47v1h-47zM60 32h29v1h-29zM0 33h47v1h-47zM61 33h27v1h-27zM0 34h2v1h-2zM7 34h41v1h-41zM62 34h26v1h-26zM11 35h36v1h-36zM62 35h26v1h-26zM13 36h33v1h-33zM62 36h26v1h-26zM14 37h32v1h-32zM61 37h28v1h-28zM15 38h31v1h-31zM62 38h29v1h-29zM16 39h29v1h-29zM62 39h26v1h-26zM17 40h27v1h-27zM62 40h25v1h-25zM17 41h27v1h-27zM63 41h22v1h-22zM18 42h15v1h-15zM37 42h7v1h-7zM63 42h21v1h-21zM18 43h14v1h-14zM38 43h7v1h-7zM63 43h21v1h-21zM18 44h13v1h-13zM39 44h7v1h-7zM63 44h21v1h-21zM18 45h13v1h-13zM39 45h7v1h-7zM62 45h23v1h-23zM17 46h14v1h-14zM39 46h7v1h-7zM62 46h26v1h-26zM17 47h14v1h-14zM40 47h7v1h-7zM61 47h17v1h-17zM83 47h5v1h-5zM17 48h2v1h-2zM24 48h8v1h-8zM42 48h5v1h-5zM61 48h15v1h-15zM85 48h2v1h-2zM26 49h6v1h-6zM43 49h4v1h-4zM61 49h14v1h-14zM86 49h1v1h-1zM27 50h4v1h-4zM44 50h4v1h-4zM60 50h14v1h-14zM28 51h2v1h-2zM45 51h4v1h-4zM60 51h13v1h-13zM29 52h1v1h-1zM45 52h3v1h-3zM60 52h13v1h-13zM60 53h6v1h-6zM69 53h3v1h-3zM60 54h5v1h-5zM70 54h2v1h-2zM59 55h5v1h-5zM71 55h1v1h-1zM58 56h5v1h-5zM58 57h5v1h-5zM59 58h2v1h-2zM59 59h1v1h-1z"/><path fill="#66372f" d="M103 44h2v1h-2zM92 45h1v1h-1zM102 45h2v1h-2zM93 46h2v1h-2zM100 46h3v1h-3zM96 47h5v1h-5zM95 48h4v1h-4zM96 49h1v1h-1zM53 50h1v1h-1zM100 50h1v1h-1zM52 51h2v1h-2zM101 51h1v1h-1zM52 52h3v1h-3zM52 53h1v1h-1zM54 53h1v1h-1zM54 54h1v1h-1zM96 54h1v1h-1zM97 55h1v1h-1zM97 56h1v1h-1zM3 57h1v1h-1zM97 57h1v1h-1zM101 57h1v1h-1zM3 58h4v1h-4zM97 58h2v1h-2zM101 58h1v1h-1zM3 59h2v1h-2zM97 59h2v1h-2zM100 59h2v1h-2zM3 60h1v1h-1zM97 60h5v1h-5zM3 61h2v1h-2zM98 61h4v1h-4zM3 62h1v1h-1zM98 62h4v1h-4zM99 63h4v1h-4zM0 67h107v1h-107zM0 68h107v1h-107zM0 69h107v1h-107zM0 70h107v1h-107zM0 71h107v1h-107zM0 72h107v1h-107zM0 73h107v1h-107zM0 74h107v1h-107z"/><path fill="#4fb248" d="M53 29h1v1h-1zM51 30h4v1h-4zM97 30h2v1h-2zM49 31h2v1h-2zM52 31h5v1h-5zM94 31h1v1h-1zM96 31h4v1h-4zM102 31h3v1h-3zM48 32h8v1h-8zM58 32h1v1h-1zM91 32h5v1h-5zM97 32h9v1h-9zM47 33h8v1h-8zM56 33h4v1h-4zM89 33h18v1h-18zM48 34h1v1h-1zM52 34h9v1h-9zM88 34h12v1h-12zM103 34h4v1h-4zM48 35h4v1h-4zM53 35h8v1h-8zM89 35h10v1h-10zM100 35h7v1h-7zM1 36h4v1h-4zM47 36h15v1h-15zM91 36h2v1h-2zM94 36h12v1h-12zM0 37h4v1h-4zM5 37h6v1h-6zM46 37h12v1h-12zM93 37h11v1h-11zM1 38h9v1h-9zM12 38h2v1h-2zM49 38h8v1h-8zM58 38h2v1h-2zM91 38h5v1h-5zM98 38h9v1h-9zM0 39h9v1h-9zM10 39h2v1h-2zM13 39h2v1h-2zM46 39h3v1h-3zM50 39h12v1h-12zM91 39h4v1h-4zM96 39h7v1h-7zM105 39h2v1h-2zM0 40h4v1h-4zM8 40h8v1h-8zM45 40h8v1h-8zM55 40h6v1h-6zM88 40h3v1h-3zM92 40h10v1h-10zM103 40h4v1h-4zM0 41h3v1h-3zM4 41h11v1h-11zM44 41h8v1h-8zM53 41h4v1h-4zM58 41h2v1h-2zM61 41h2v1h-2zM85 41h14v1h-14zM100 41h7v1h-7zM0 42h13v1h-13zM45 42h3v1h-3zM51 42h7v1h-7zM60 42h3v1h-3zM84 42h16v1h-16zM101 42h6v1h-6zM1 43h8v1h-8zM10 43h2v1h-2zM13 43h4v1h-4zM46 43h5v1h-5zM52 43h11v1h-11zM85 43h4v1h-4zM90 43h11v1h-11zM106 43h1v1h-1zM0 44h4v1h-4zM5 44h3v1h-3zM9 44h9v1h-9zM47 44h15v1h-15zM90 44h4v1h-4zM95 44h5v1h-5zM0 45h5v1h-5zM8 45h9v1h-9zM47 45h8v1h-8zM56 45h3v1h-3zM60 45h1v1h-1zM89 45h3v1h-3zM93 45h2v1h-2zM0 46h11v1h-11zM12 46h4v1h-4zM48 46h2v1h-2zM51 46h5v1h-5zM57 46h3v1h-3zM90 46h3v1h-3zM95 46h1v1h-1zM0 47h7v1h-7zM9 47h3v1h-3zM50 47h7v1h-7zM93 47h1v1h-1zM0 48h13v1h-13zM49 48h3v1h-3zM53 48h6v1h-6zM101 48h1v1h-1zM1 49h2v1h-2zM6 49h2v1h-2zM9 49h2v1h-2zM13 49h4v1h-4zM50 49h3v1h-3zM56 49h1v1h-1zM101 49h3v1h-3zM0 50h1v1h-1zM3 50h1v1h-1zM8 50h2v1h-2zM11 50h7v1h-7zM0 51h17v1h-17zM0 52h10v1h-10zM11 52h4v1h-4zM0 53h5v1h-5zM6 53h5v1h-5zM0 54h6v1h-6zM9 54h3v1h-3zM1 55h2v1h-2zM4 55h3v1h-3zM44 56h3v1h-3zM39 57h1v1h-1zM43 57h5v1h-5zM86 57h1v1h-1zM38 58h3v1h-3zM42 58h6v1h-6zM85 58h4v1h-4zM93 58h1v1h-1zM12 59h3v1h-3zM37 59h6v1h-6zM44 59h1v1h-1zM46 59h1v1h-1zM48 59h3v1h-3zM83 59h1v1h-1zM85 59h5v1h-5zM91 59h4v1h-4zM10 60h3v1h-3zM14 60h2v1h-2zM36 60h1v1h-1zM38 60h1v1h-1zM42 60h2v1h-2zM45 60h7v1h-7zM82 60h4v1h-4zM88 60h5v1h-5zM94 60h1v1h-1zM5 61h3v1h-3zM9 61h2v1h-2zM13 61h2v1h-2zM16 61h1v1h-1zM35 61h2v1h-2zM38 61h2v1h-2zM41 61h1v1h-1zM43 61h3v1h-3zM47 61h1v1h-1zM50 61h3v1h-3zM81 61h1v1h-1zM83 61h2v1h-2zM86 61h2v1h-2zM90 61h2v1h-2zM93 61h1v1h-1zM95 61h2v1h-2zM6 62h1v1h-1zM8 62h1v1h-1zM12 62h1v1h-1zM15 62h1v1h-1zM17 62h1v1h-1zM34 62h2v1h-2zM37 62h1v1h-1zM42 62h2v1h-2zM46 62h1v1h-1zM48 62h2v1h-2zM51 62h2v1h-2zM81 62h2v1h-2zM85 62h2v1h-2zM88 62h2v1h-2zM92 62h3v1h-3zM96 62h2v1h-2zM3 63h1v1h-1zM0 65h107v1h-107zM0 66h107v1h-107z"/><path fill="#f7f7f7" d="M33 42h4v1h-4zM32 43h6v1h-6zM31 44h8v1h-8zM102 44h1v1h-1zM31 45h8v1h-8zM101 45h1v1h-1zM104 45h2v1h-2zM31 46h8v1h-8zM104 46h3v1h-3zM31 47h9v1h-9zM78 47h5v1h-5zM103 47h4v1h-4zM19 48h5v1h-5zM32 48h10v1h-10zM76 48h9v1h-9zM87 48h2v1h-2zM104 48h3v1h-3zM18 49h8v1h-8zM32 49h11v1h-11zM75 49h11v1h-11zM87 49h9v1h-9zM105 49h2v1h-2zM18 50h9v1h-9zM31 50h13v1h-13zM74 50h23v1h-23zM104 50h3v1h-3zM18 51h10v1h-10zM30 51h15v1h-15zM59 51h1v1h-1zM73 51h24v1h-24zM102 51h5v1h-5zM18 52h11v1h-11zM30 52h15v1h-15zM48 52h3v1h-3zM58 52h2v1h-2zM73 52h24v1h-24zM102 52h5v1h-5zM17 53h35v1h-35zM56 53h4v1h-4zM66 53h3v1h-3zM72 53h24v1h-24zM102 53h5v1h-5zM16 54h27v1h-27zM47 54h5v1h-5zM55 54h5v1h-5zM65 54h5v1h-5zM72 54h24v1h-24zM102 54h5v1h-5zM13 55h29v1h-29zM48 55h4v1h-4zM55 55h4v1h-4zM64 55h7v1h-7zM72 55h13v1h-13zM89 55h8v1h-8zM102 55h5v1h-5zM12 56h8v1h-8zM35 56h2v1h-2zM41 56h1v1h-1zM48 56h4v1h-4zM55 56h3v1h-3zM78 56h6v1h-6zM90 56h7v1h-7zM102 56h5v1h-5zM0 57h3v1h-3zM8 57h13v1h-13zM22 57h11v1h-11zM34 57h2v1h-2zM48 57h1v1h-1zM51 57h1v1h-1zM55 57h3v1h-3zM63 57h1v1h-1zM65 57h11v1h-11zM77 57h7v1h-7zM90 57h1v1h-1zM95 57h2v1h-2zM102 57h5v1h-5zM0 58h3v1h-3zM7 58h4v1h-4zM15 58h5v1h-5zM35 58h1v1h-1zM55 58h4v1h-4zM61 58h2v1h-2zM78 58h4v1h-4zM96 58h1v1h-1zM102 58h5v1h-5zM0 59h3v1h-3zM7 59h3v1h-3zM16 59h5v1h-5zM22 59h11v1h-11zM34 59h1v1h-1zM55 59h4v1h-4zM60 59h4v1h-4zM65 59h11v1h-11zM77 59h4v1h-4zM96 59h1v1h-1zM102 59h5v1h-5zM0 60h3v1h-3zM8 60h1v1h-1zM17 60h3v1h-3zM55 60h8v1h-8zM78 60h3v1h-3zM102 60h5v1h-5zM0 61h3v1h-3zM17 61h3v1h-3zM55 61h8v1h-8zM78 61h2v1h-2zM102 61h4v1h-4zM0 62h3v1h-3zM18 62h3v1h-3zM22 62h11v1h-11zM55 62h9v1h-9zM65 62h11v1h-11zM77 62h3v1h-3zM102 62h4v1h-4zM1 63h1v1h-1zM19 63h2v1h-2zM22 63h10v1h-10zM56 63h8v1h-8zM65 63h11v1h-11zM77 63h4v1h-4zM103 63h2v1h-2z"/><path fill="#93c562" d="M52 27h3v1h-3zM51 28h7v1h-7zM96 28h3v1h-3zM49 29h4v1h-4zM54 29h5v1h-5zM95 29h5v1h-5zM101 29h4v1h-4zM48 30h3v1h-3zM55 30h5v1h-5zM91 30h6v1h-6zM99 30h7v1h-7zM47 31h2v1h-2zM51 31h1v1h-1zM57 31h3v1h-3zM90 31h4v1h-4zM95 31h1v1h-1zM100 31h2v1h-2zM105 31h2v1h-2zM47 32h1v1h-1zM56 32h2v1h-2zM59 32h1v1h-1zM89 32h2v1h-2zM96 32h1v1h-1zM106 32h1v1h-1zM55 33h1v1h-1zM60 33h1v1h-1zM88 33h1v1h-1zM2 34h5v1h-5zM49 34h3v1h-3zM61 34h1v1h-1zM100 34h3v1h-3zM0 35h11v1h-11zM47 35h1v1h-1zM52 35h1v1h-1zM61 35h1v1h-1zM99 35h1v1h-1zM0 36h1v1h-1zM5 36h8v1h-8zM46 36h1v1h-1zM4 37h1v1h-1zM11 37h3v1h-3zM58 37h3v1h-3zM0 38h1v1h-1zM10 38h2v1h-2zM14 38h1v1h-1zM46 38h3v1h-3zM57 38h1v1h-1zM60 38h2v1h-2zM96 38h2v1h-2zM9 39h1v1h-1zM12 39h1v1h-1zM15 39h1v1h-1zM45 39h1v1h-1zM49 39h1v1h-1zM88 39h3v1h-3zM95 39h1v1h-1zM103 39h2v1h-2zM4 40h4v1h-4zM16 40h1v1h-1zM44 40h1v1h-1zM53 40h2v1h-2zM87 40h1v1h-1zM91 40h1v1h-1zM102 40h1v1h-1zM3 41h1v1h-1zM15 41h2v1h-2zM52 41h1v1h-1zM13 42h5v1h-5zM48 42h3v1h-3zM12 43h1v1h-1zM17 43h1v1h-1zM51 43h1v1h-1zM7 47h2v1h-2zM16 48h1v1h-1zM102 48h2v1h-2zM11 49h2v1h-2zM17 49h1v1h-1zM10 50h1v1h-1zM43 54h4v1h-4zM42 55h6v1h-6zM85 55h4v1h-4zM37 56h4v1h-4zM42 56h2v1h-2zM47 56h1v1h-1zM84 56h6v1h-6zM36 57h3v1h-3zM40 57h3v1h-3zM49 57h2v1h-2zM84 57h2v1h-2zM87 57h3v1h-3zM91 57h4v1h-4zM11 58h4v1h-4zM36 58h2v1h-2zM41 58h1v1h-1zM48 58h4v1h-4zM82 58h3v1h-3zM89 58h4v1h-4zM94 58h2v1h-2zM10 59h2v1h-2zM15 59h1v1h-1zM35 59h2v1h-2zM45 59h1v1h-1zM47 59h1v1h-1zM51 59h2v1h-2zM81 59h2v1h-2zM84 59h1v1h-1zM90 59h1v1h-1zM95 59h1v1h-1zM6 60h2v1h-2zM9 60h1v1h-1zM13 60h1v1h-1zM16 60h1v1h-1zM35 60h1v1h-1zM37 60h1v1h-1zM40 60h2v1h-2zM44 60h1v1h-1zM52 60h1v1h-1zM81 60h1v1h-1zM86 60h2v1h-2zM95 60h2v1h-2zM8 61h1v1h-1zM11 61h1v1h-1zM42 61h1v1h-1zM48 61h2v1h-2zM80 61h1v1h-1zM85 61h1v1h-1zM88 61h1v1h-1zM92 61h1v1h-1zM94 61h1v1h-1zM97 61h1v1h-1zM106 61h1v1h-1zM4 62h1v1h-1zM9 62h1v1h-1zM36 62h1v1h-1zM45 62h1v1h-1zM50 62h1v1h-1zM91 62h1v1h-1zM106 62h1v1h-1zM0 63h1v1h-1zM18 63h1v1h-1zM32 63h1v1h-1zM34 63h1v1h-1zM53 63h1v1h-1zM98 63h1v1h-1zM105 63h1v1h-1zM0 64h107v1h-107z"/><path fill="#388f6c" d="M88 35h1v1h-1zM88 36h3v1h-3zM93 36h1v1h-1zM106 36h1v1h-1zM89 37h4v1h-4zM104 37h3v1h-3zM61 40h1v1h-1zM57 41h1v1h-1zM60 41h1v1h-1zM99 41h1v1h-1zM44 42h1v1h-1zM58 42h2v1h-2zM100 42h1v1h-1zM0 43h1v1h-1zM9 43h1v1h-1zM45 43h1v1h-1zM84 43h1v1h-1zM89 43h1v1h-1zM101 43h5v1h-5zM4 44h1v1h-1zM8 44h1v1h-1zM46 44h1v1h-1zM62 44h1v1h-1zM84 44h6v1h-6zM94 44h1v1h-1zM100 44h2v1h-2zM105 44h2v1h-2zM5 45h3v1h-3zM17 45h1v1h-1zM46 45h1v1h-1zM55 45h1v1h-1zM59 45h1v1h-1zM61 45h1v1h-1zM85 45h4v1h-4zM95 45h6v1h-6zM106 45h1v1h-1zM11 46h1v1h-1zM16 46h1v1h-1zM46 46h2v1h-2zM50 46h1v1h-1zM56 46h1v1h-1zM60 46h2v1h-2zM88 46h2v1h-2zM96 46h4v1h-4zM12 47h5v1h-5zM47 47h3v1h-3zM57 47h4v1h-4zM88 47h5v1h-5zM94 47h2v1h-2zM13 48h3v1h-3zM47 48h2v1h-2zM52 48h1v1h-1zM59 48h2v1h-2zM89 48h6v1h-6zM0 49h1v1h-1zM3 49h3v1h-3zM8 49h1v1h-1zM47 49h3v1h-3zM53 49h3v1h-3zM57 49h4v1h-4zM100 49h1v1h-1zM104 49h1v1h-1zM1 50h2v1h-2zM4 50h4v1h-4zM48 50h5v1h-5zM54 50h6v1h-6zM101 50h3v1h-3zM17 51h1v1h-1zM49 51h3v1h-3zM54 51h5v1h-5zM10 52h1v1h-1zM15 52h3v1h-3zM51 52h1v1h-1zM55 52h3v1h-3zM5 53h1v1h-1zM11 53h6v1h-6zM55 53h1v1h-1zM6 54h3v1h-3zM12 54h4v1h-4zM0 55h1v1h-1zM3 55h1v1h-1zM7 55h6v1h-6zM0 56h12v1h-12zM4 57h4v1h-4zM43 59h1v1h-1zM39 60h1v1h-1zM93 60h1v1h-1zM12 61h1v1h-1zM15 61h1v1h-1zM37 61h1v1h-1zM40 61h1v1h-1zM46 61h1v1h-1zM82 61h1v1h-1zM89 61h1v1h-1zM5 62h1v1h-1zM7 62h1v1h-1zM10 62h2v1h-2zM13 62h2v1h-2zM16 62h1v1h-1zM38 62h4v1h-4zM44 62h1v1h-1zM47 62h1v1h-1zM80 62h1v1h-1zM83 62h2v1h-2zM87 62h1v1h-1zM90 62h1v1h-1zM95 62h1v1h-1zM4 63h14v1h-14zM35 63h18v1h-18zM81 63h17v1h-17zM106 63h1v1h-1z"/><path fill="#8d5139" d="M103 46h1v1h-1zM101 47h2v1h-2zM99 48h2v1h-2zM97 49h3v1h-3zM97 50h3v1h-3zM97 51h4v1h-4zM97 52h5v1h-5zM53 53h1v1h-1zM96 53h6v1h-6zM52 54h2v1h-2zM97 54h5v1h-5zM52 55h3v1h-3zM98 55h4v1h-4zM52 56h3v1h-3zM98 56h4v1h-4zM52 57h3v1h-3zM98 57h3v1h-3zM52 58h3v1h-3zM99 58h2v1h-2zM5 59h2v1h-2zM53 59h2v1h-2zM99 59h1v1h-1zM4 60h2v1h-2zM53 60h2v1h-2zM20 61h15v1h-15zM53 61h2v1h-2zM63 61h15v1h-15zM53 62h2v1h-2zM2 63h1v1h-1zM54 63h2v1h-2z"/><path fill="#d39c63" d="M20 56h15v1h-15zM63 56h15v1h-15zM20 58h15v1h-15zM63 58h15v1h-15zM20 60h15v1h-15zM63 60h15v1h-15z"/><path fill="#45263a" d="M21 57h1v1h-1zM33 57h1v1h-1zM64 57h1v1h-1zM76 57h1v1h-1zM21 59h1v1h-1zM33 59h1v1h-1zM64 59h1v1h-1zM76 59h1v1h-1zM21 62h1v1h-1zM33 62h1v1h-1zM64 62h1v1h-1zM76 62h1v1h-1zM21 63h1v1h-1zM33 63h1v1h-1zM64 63h1v1h-1zM76 63h1v1h-1z"/></svg>
+    <div id="landscapeMessage">not supported on landscape view... cuz... im lazy to make it... use ur phone in portrait view if u wanna play...</div>
+    <div id="digitalClock"></div>
+    <div id="startMenu">
+      <h1>catch the cheese!</h1>
+      <img id="lily" src="lily.webp" alt="lily"/>
+      <button id="startButton">play</button>
+    </div>
+    <div id="gameOverPopup">
+      <h2>game over!</h2>
+      <p>cheese catched: <span id="finalScore"></span></p>
+      <button id="restartButton">restart game</button>
+    </div>
+    <div id="scoreboard">
+      <i class="fas fa-heart"></i> <span id="lives">5</span>
+      <i class="fas fa-star"></i> <span id="highScore">0</span>
+      <i class="fas fa-cheese"></i> <span id="score">0</span>
+    </div>
+    <!-- Song: Zachz Winner - blu [NCS Release]
+         Music provided by NoCopyrightSounds
+         Free Download/Stream: http://ncs.io/blu
+         Watch: http://ncs.lnk.to/bluAT/youtube -->
+    <audio id="backgroundMusic" src="music.mp3" loop></audio>
+    <audio id="catchSound" src="catch.mp3"></audio>
+    <audio id="fallSound" src="fall.mp3"></audio>
+    <audio id="gameOverSound" src="game-over.mp3"></audio>
+    <canvas id="gameCanvas"></canvas>
+    <script src="cheese.js"></script>
+  </body>
+</html>
