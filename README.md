@@ -8,7 +8,7 @@
 
 <img src="images/og-image.jpg" alt="catch the cheese preview" width="560">
 
-[**play it here ↗**](https://justcallmechezz.github.io/projects/catchthecheese/)
+[**play it here ↗**](https://justcallmechezz.github.io/catchthecheese/)
 
 </div>
 
