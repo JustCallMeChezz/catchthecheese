@@ -38,9 +38,9 @@ cheese falls from the sky. lily catches it. thats the whole game... yea... just 
 on a keyboard, use the **left** and **right** arrow keys. (well... if u succeed rotating ur monitor 90° if u play on pc... or just use windowed mode then make it look portrait lol...)
 
 ```
-┊ ♥  hearts      lives left, u start with 5
-┊ ★  star        ur high score
-┊ 🧀 cheese      cheese catched this round
+┊ hearts      lives left, u start with 5
+┊ star        ur high score
+┊ cheese      cheese catched this round
 ```
 
 the cheese falls a little faster the longer u survive, so... good luck...
